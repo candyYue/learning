@@ -96,19 +96,67 @@ export default {
         .attr("cx", 100)
         .attr("cy", 100)
         .attr("r", 45)
-        .style("fill", "lightgreen")
-        .transition()
-        .duration(2000)
-        .ease(d3.easeBounce)
-        .attr("cx", 300)
-        .style("fill", "red")
-        .attr("r", 25);
+        .style("fill", "lightgreen");
+      // .transition()
+      // .duration(2000)
+      // .ease(d3.easeBounce)
+      // .attr("cx", 300)
+      // .style("fill", "red")
+      // .attr("r", 25);
+      circle.on("click", function() {
+        console.log(d3.event);
+      });
+    },
+    // test4
+    pieChart() {
+      const svg = d3
+        .select("body") //选择文档中的body元素
+        .append("svg") //添加一个svg元素
+        .attr("width", 500) //设定宽度
+        .attr("height", 200);
+      const dataset = [30, 10, 43, 55, 13];
+      const pie = d3.pie();
+      const piedata = pie(dataset);
+      const outerRadius = 150;
+      const innerRadius = 0;
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
+      //弧生成器
+      const arc = d3
+        .arc()
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius);
+      // 分组元素g
+      const arcs = svg
+        .selectAll("g")
+        .data(piedata)
+        .enter()
+        .append("g")
+        .attr("transform", "translate(200,200)");
+      // 添加 path
+      arcs
+        .append("path")
+        .attr("fill", function(d, i) {
+          return color(i);
+        })
+        .attr("d", function(d) {
+          console.log(d)
+          return arc(d); //调用弧生成器，得到路径值
+        });
+      // text
+      arcs.append('text').attr("transform",function(d){
+				return "translate(" + arc.centroid(d) + ")"; //arc.centroid(d) 算出弧线的中心
+      })
+      .attr("text-anchor","middle")
+      .text(function(d){
+				return d.data +'%';
+			});
     }
   },
   mounted() {
     // this.drawCircle();
     // this.drawTest();
-    this.circleAnimat();
+    // this.circleAnimat();
+    this.pieChart();
   }
 };
 </script>
