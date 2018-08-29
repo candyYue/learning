@@ -104,7 +104,7 @@ export default {
       // .style("fill", "red")
       // .attr("r", 25);
       circle.on("click", function() {
-        console.log(d3.event);
+        // console.log(d3.event);
       });
     },
     // test4
@@ -112,8 +112,8 @@ export default {
       const svg = d3
         .select("body") //选择文档中的body元素
         .append("svg") //添加一个svg元素
-        .attr("width", 500) //设定宽度
-        .attr("height", 200);
+        .attr("width", 600) //设定宽度
+        .attr("height", 600);
       const dataset = [30, 10, 43, 55, 13];
       const pie = d3.pie();
       const piedata = pie(dataset);
@@ -139,7 +139,6 @@ export default {
           return color(i);
         })
         .attr("d", function(d) {
-          console.log(d)
           return arc(d); //调用弧生成器，得到路径值
         });
       // text
